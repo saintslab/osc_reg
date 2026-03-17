@@ -56,6 +56,35 @@ for i in epochs:
 ```
 
 ---
+
+#### Baseline Quantization Methods
+To perform Post-Training Quantization (PTQ) attach the quantizers to the specified layers of the model as before, and quantize once after the model has converged. 
+
+```python
+from osciquant.regularization import OsciQuantLoss
+from osciquant.quantizers import UniformQuantizer
+from osciquant.handler import attach_weight_quantizers, toggle_quantization
+
+BIT = 4  # desired quantization level 
+EXCLUDE = []  # quantize all layers
+QUANTIZER = UniformQuantizer(bit_width=BIT)
+
+attach_weight_quantizers(model=model, 
+                         exclude_layers=EXCLUDE, 
+                         quantizer=UniformQuantizer(BIT), 
+                         enabled=False)
+
+for i in epochs:
+    ...
+    ### Normal full precision training
+    ...
+
+### Obtain PTQ model
+toggle_quantization(model, enabled=True)
+
+### Evaluate using the quantized model
+```
+
 ## Todo
 - feature: function for adding unique quantizer object to each layer (LSQ)
 - feature: function for cross-bit accuracy
