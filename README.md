@@ -61,7 +61,6 @@ for i in epochs:
 To perform Post-Training Quantization (PTQ) attach the quantizers to the specified layers of the model as before, and quantize once after the model has converged. 
 
 ```python
-from osciquant.regularization import OsciQuantLoss
 from osciquant.quantizers import UniformQuantizer
 from osciquant.handler import attach_weight_quantizers, toggle_quantization
 
